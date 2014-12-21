@@ -61,12 +61,17 @@ void menuCases(int *input){
       sprintf(buffer,"%d \0",temporary);
       Print("Sun at",33,3);
       Print(buffer,33,4);
+      
+    case 3:
+      clearDisplay();
+      Print("Set high value", 1, 2);
+      
     }
     
   case 1:
     
     switch(*input){
-      
+    case 11:
       currentMenu = 0;
       PrintMenu();
     }
