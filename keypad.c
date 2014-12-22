@@ -66,7 +66,7 @@ void menuCases(int *input){
     case 3:
       Clear_Display();
       Print("Set high value:", 1, 2);
-      Print("Press "0" to abort", 1, 14);
+      Print("Press 0 to cancel", 1, 14);
       
       
     }

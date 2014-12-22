@@ -1,6 +1,7 @@
 #include "printer.h"
 #include "main.h"
 #include "temperature.h"
+#include "display.h"
 #include <stdio.h>
 
 char tableValues[40];
