@@ -20,12 +20,17 @@ void Print(char* text, int x, int y){
 
 void PrintMenu(void){
   Clear_Display();
-  Print("1. Temperature table", 0,1);
-  Print("2. Find position of the sun",0,3);
-  Print("3. Set temperature alarm",0,5);
-  Print("4. ",0,7);
-  Print("5. ",0,9);
-  Print("6. Toggle fast mode",0,11);
+  Print("Welcome to M&J's weatherstation", 0,1);
+  Print("1. Temperature table", 0,3);
+  Print("2. Find position of the sun",0,5);
+  Print("3. Set temperature alarm",0,7);
+  Print("4. ",0,9);
+  Print("5. ",0,11);
+  Print("6. Toggle fast mode",0,13);
+  Print("FM (on) ", 32, 13);
+  for(int i=0; i<16; i++){
+    Print("|", 31,i);
+  }
 }
 
 void PrintTempTable(void){

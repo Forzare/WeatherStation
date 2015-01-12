@@ -4,11 +4,14 @@
 #include <stdlib.h>
 #include "servo.h"
 #include "printer.h"
+#include "display.h"
+#include "temperature.h"
 
 int currentMenu = 0;
 int temporary;
 int buttonPressed;
-
+int maxLimit = 99;
+int lowLimit = -99;
 
 int readKeypad(){
   int value = 0;
@@ -33,7 +36,7 @@ int readKeypad(){
         value = theRow*3 + theCol + 1;
         buttonPressed = 1;
       }
-      delay(100);
+      delay(300);
     }
   }
   *AT91C_PIOD_SODR = 1<<2;
@@ -59,16 +62,32 @@ void menuCases(int *input){
     case 2:
       temporary = findLight();
       sprintf(buffer,"%d \0",temporary);
-      Print("Sun at",33,3);
-      Print(buffer,33,4);
+      Print("Sun at",33,6);
+      Print(buffer,33,7);
       break;
       
     case 3:
       Clear_Display();
       Print("Set high value:", 1, 2);
-      Print("Press 0 to cancel", 1, 14);
-      
-      
+      Print("Press # to confirm", 1, 14);
+      maxLimit = maxMinLimit(2);
+      Print("Set low value: ", 1, 4);
+      lowLimit = maxMinLimit(4);
+      PrintMenu();
+      break;
+    case 6:
+      if(fastMode == 1){
+        fastMode = 60;
+        while(readKeypad() != 0) {}
+        Print("FM (off)", 32, 13);
+        break;
+      }
+      else{
+        fastMode = 1;
+        while(readKeypad() != 0) {}
+        Print("FM (on) ", 32, 13);
+        break;
+      }
     }
     
   case 1:

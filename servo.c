@@ -13,21 +13,24 @@
 #define ADC_LCDR ((volatile unsigned int*)0x400C0020)
 #define ADC_CDR2 ((volatile unsigned int*)0x400C0058)
 
+int lightValueLeft = 0;
+int lightValueRight = 0;
+
 int findLight(){
     while(nInterupts <2){};
     int minimumLight = 4095;
     int currentLight;
     unsigned int thePosition;
     unsigned int servo;
-    for(servo = 1400; servo < 5801; servo = servo + 100){
+    for(servo = 1500; servo < 5801; servo = servo + 100){
       currentLight = lightMeasure();
       if(currentLight < minimumLight){
         minimumLight = currentLight;
         thePosition = servo;
       }
       setupInterupts(1000);
-      while(nInterupts < 60){} 
-        *PWM_CDTYUPD = servo;
+      while(nInterupts < 40){} 
+        *PWM_CDTYUPD = servo;   
       }
     setupInterupts(1000);
     while(nInterupts < 100){} 
@@ -35,11 +38,23 @@ int findLight(){
     return thePosition;
 }
 
+void lightMeasureLeft(){
+  *ADC_CHER  = 1<<2;
+  *ADC_CR = 1<<1;
+  //int lightValue = *ADC_CDR2;
+  lightValueLeft = *ADC_CDR2;
+  *ADC_CR = 1<<1;
+  lightValueLeft = *ADC_LCDR & 0xFFF;
+  //return lightValue; 
+}
+
 int lightMeasure(){
   *ADC_CHER  = 1<<2;
   *ADC_CR = 1<<1;
   int lightValue = *ADC_CDR2;
   *ADC_CR = 1<<1;
-  //lightValue = *ADC_LCDR & 0xFFF;
+  lightValue = *ADC_LCDR & 0xFFF;
   return lightValue; 
 }
+
+

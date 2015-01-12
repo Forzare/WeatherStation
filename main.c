@@ -156,7 +156,7 @@ void Init_Display(void){
   Clear_Display();
 }
 
-int main(){
+ int main(){
   SystemInit();
   setup();
   adcSetup();
@@ -179,6 +179,19 @@ int main(){
     }
     updateDegrees();
     Print(floatToChar, 33,1); //Skriv ut temperatur
+    
+    if(value > maxLimit){
+      Print("ALARM", 32, 3);
+      Print("TOO HOT ", 32,4);
+    }
+    else if(value < lowLimit){
+      Print("  ALARM", 32, 3);
+      Print("TOO COLD", 32,4);
+    }
+    else if(value >lowLimit || value<maxLimit){
+      Print("        ", 32, 3);
+      Print("        ", 32, 4);
+    }
     if(tempCount >= fastMode){
       updateDegrees();
       delay(60);
@@ -188,6 +201,7 @@ int main(){
         tempFlag = 0;
       }
     }
+    
     input = readKeypad();
     if(buttonPressed == 1){
       buttonPressed = 0;

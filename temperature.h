@@ -20,5 +20,6 @@ void tempMeasure();
 void tempCalc();
 void updateDegrees();
 table* MinMaxAvg(float* tempVec);
+int maxMinLimit();
 
 #endif
